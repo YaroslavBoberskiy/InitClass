@@ -21,28 +21,20 @@ public class Demo {
 
     public static <T> void initClass (Class<T> c, Map<String, Object> map) {
         try {
-            Object obj = Class.forName(c.getName()).getConstructor().newInstance();
+            T obj = c.newInstance();
             Field [] fs = obj.getClass().getDeclaredFields();
             for (String key : map.keySet()) {
                 for (Field f : fs) {
-
                     if (f.getName().equals(key)) {
                         System.out.println("YES!");
                         f.setAccessible(true);
                         f.set(obj, map.get(key));
                     }
-
                 }
             }
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
